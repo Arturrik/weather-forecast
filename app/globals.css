@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+.dark {
+  --background: #0b0f19;
+  --foreground: #f8fafc;
+  --muted: rgba(248, 250, 252, 0.78);
+  --surface-bg: #141a28;
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --stat-bg: #1a2235;
+  --input-bg: #141a28;
+  --input-text: #f8fafc;
+  --label-color: rgba(248, 250, 252, 0.5);
+  --dropdown-bg: #141a28;
+  --btn-primary-bg: #0a84ff;
+  --btn-primary-hover: #409cff;
+  --btn-primary-text: #ffffff;
+  --btn-secondary-bg: rgba(255, 255, 255, 0.12);
+  --btn-secondary-hover: rgba(255, 255, 255, 0.18);
+  --btn-secondary-text: #f8fafc;
+  --btn-ghost-text: #0a84ff;
+}
+
+.light {
+  --background: #e8edf4;
+  --foreground: #0f172a;
+  --muted: rgba(15, 23, 42, 0.72);
+  --surface-bg: #ffffff;
+  --surface-border: rgba(15, 23, 42, 0.1);
+  --stat-bg: #f1f5f9;
+  --input-bg: #ffffff;
+  --input-text: #0f172a;
+  --label-color: rgba(15, 23, 42, 0.5);
+  --dropdown-bg: #ffffff;
+  --btn-primary-bg: #007aff;
+  --btn-primary-hover: #0066d6;
+  --btn-primary-text: #ffffff;
+  --btn-secondary-bg: rgba(0, 0, 0, 0.06);
+  --btn-secondary-hover: rgba(0, 0, 0, 0.1);
+  --btn-secondary-text: #0f172a;
+  --btn-ghost-text: #007aff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Commissioner, system-ui, sans-serif;
+  font-weight: 500;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.font-display {
+  font-family: Commissioner, system-ui, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-weight: inherit;
+}
+
+input[type="date"]::-webkit-datetime-edit,
+input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  font-family: inherit;
+  font-weight: 500;
+}
+
+@layer components {
+  .surface-card,
+  .glass-card {
+    border-radius: 1rem;
+    border: 1px solid var(--surface-border);
+    background: var(--surface-bg);
+  }
+
+  .stat-box {
+    border: 1px solid var(--surface-border);
+    background: var(--stat-bg);
+  }
+
+  .theme-text {
+    color: var(--foreground);
+  }
+
+  .theme-muted {
+    color: var(--muted);
+  }
+
+  .btn-apple-primary {
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  }
+
+  .btn-apple-primary:hover:not(:disabled) {
+    background: var(--btn-primary-hover);
+  }
+
+  .btn-apple-secondary {
+    background: var(--btn-secondary-bg);
+    color: var(--btn-secondary-text);
+  }
+
+  .btn-apple-secondary:hover:not(:disabled) {
+    background: var(--btn-secondary-hover);
+  }
+
+  .btn-apple-ghost {
+    background: transparent;
+    color: var(--btn-ghost-text);
+    min-height: auto;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-weight: 500;
+  }
+
+  .btn-apple-ghost:hover:not(:disabled) {
+    opacity: 0.75;
+  }
+}
+
+@layer utilities {
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+input[type="date"] {
+  color-scheme: dark;
+}
+
+.light input[type="date"] {
+  color-scheme: light;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-shimmer,
+  .weather-lightning,
+  .weather-fog {
+    animation: none;
+  }
+}
+
+/* Лёгкие CSS-оверлеи — GPU-composited, без WebGL */
+.weather-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.weather-sun {
+  background: radial-gradient(
+    circle at 78% 12%,
+    rgba(245, 158, 11, 0.22) 0%,
+    transparent 45%
+  );
+}
+
+.weather-lightning {
+  background: white;
+  opacity: 0;
+  animation: lightning-flash 10s infinite;
+}
+
+.weather-fog {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(148, 163, 184, 0.15) 50%,
+    rgba(148, 163, 184, 0.25) 100%
+  );
+}
+
+@keyframes lightning-flash {
+  0%,
+  91%,
+  93%,
+  100% {
+    opacity: 0;
+  }
+  92% {
+    opacity: 0.12;
+  }
+}
